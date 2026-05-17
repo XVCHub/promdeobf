@@ -177,37 +177,25 @@ async function run() {
     OUTPUT.className = 'output-area';
     setStatus('loading', 'deobfuscating...');
 
-    try {
-        const RES = await fetch('https://relua.lua.cz/deobfuscate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                filename: '25ms.lua',
-                source: SRC,
-                lua_version: 'Lua51',
-                pretty: true
-            })
-        });
+const RES = await fetch("https://crimson-brook-c5dd.xvchubontop.workers.dev/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        source: SRC
+    })
+});
 
-        const DATA = await RES.json();
+const DATA = await RES.json();
 
-        if (DATA.output) {
-            OUTPUT.textContent = DATA.output;
-            OUTPUT.className = 'output-area';
-            setStatus('success', 'done');
-        } 
-        else if (DATA.retry_after) {
-            showError('rate limited, try again');
-        } 
-        else {
-            showError('failed to deobfuscate');
-        }
-
-    } catch (e) {
-        showError('network error / blocked api');
-    }
+if (DATA.output) {
+    OUTPUT.textContent = DATA.output;
+    OUTPUT.className = 'output-area';
+    setStatus('success', 'done');
+} else {
+    showError(DATA.error || "failed");
+}
 
     RUN_BTN.disabled = false;
 }
