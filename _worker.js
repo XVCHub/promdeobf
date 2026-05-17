@@ -1,6 +1,6 @@
 export default {
     async fetch(req) {
-        if (req.method !== "POST" || new URL(req.url).pathname !== "/deobfuscate")
+        if (req.method !== "POST" || new URL(req.url).pathname !== "/")
             return new Response("not found", { status: 404 });
 
         const { source } = await req.json();
