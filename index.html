@@ -7,63 +7,97 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --bg: #fafaf9; --surface: #fff; --border: #e5e4e0; --border-h: #c4c3be;
-    --text: #1a1917; --muted: #78766e; --soft: #f0efe9;
-    --green: #16a34a; --red: #dc2626; --amber: #f59e0b;
-    --mono: 'Geist Mono', monospace; --sans: 'Geist', sans-serif;
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: #e5e4e0;
+    --border-h: #c4c3be;
+    --text: #1a1917;
+    --muted: #78766e;
+    --soft: #f0efe9;
+    --green: #16a34a;
+    --red: #dc2626;
+    --amber: #f59e0b;
+    --mono: 'Geist Mono', monospace;
+    --sans: 'Geist', sans-serif;
   }
+
   body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
   header { border-bottom: 1px solid var(--border); padding: 0 2rem; height: 52px; display: flex; align-items: center; justify-content: space-between; background: var(--surface); }
   .logo { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: -0.02em; }
   .logo span { color: var(--muted); font-weight: 300; }
   .badge { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--soft); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); }
+
   main { flex: 1; max-width: 960px; width: 100%; margin: 0 auto; padding: 3rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
   h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.03em; }
   .sub { font-size: 14px; color: var(--muted); font-weight: 300; margin-top: 5px; }
+
   .editor-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+
   .pane { background: var(--surface); display: flex; flex-direction: column; }
   .pane-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--soft); }
-  .pane-label { font-family: var(--mono); font-size: 11px; color: var(--muted); }
-  .pane-action { font-family: var(--mono); font-size: 11px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: background .1s, color .1s; }
+  .pane-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.02em; }
+  .pane-action { font-family: var(--mono); font-size: 11px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: background 0.1s, color 0.1s; }
   .pane-action:hover { background: var(--border); color: var(--text); }
-  textarea { flex: 1; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; color: var(--text); background: var(--surface); border: none; resize: none; outline: none; padding: 14px; min-height: 380px; }
+
+  textarea { flex: 1; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; color: var(--text); background: var(--surface); border: none; resize: none; outline: none; padding: 14px; min-height: 380px; tab-size: 2; }
   textarea::placeholder { color: var(--muted); opacity: 0.4; }
+
   .output-area { flex: 1; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; color: var(--text); background: var(--surface); padding: 14px; min-height: 380px; white-space: pre-wrap; word-break: break-all; overflow-y: auto; }
   .output-area.empty { color: var(--muted); opacity: 0.35; font-style: italic; }
   .output-area.error { color: var(--red); }
+
   .controls { display: flex; align-items: center; gap: 10px; }
-  .btn-run { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--surface); background: var(--text); border: none; border-radius: 7px; padding: 9px 20px; cursor: pointer; transition: opacity .15s, transform .1s; }
-  .btn-run:hover { opacity: .82; }
-  .btn-run:active { transform: scale(.98); }
-  .btn-run:disabled { opacity: .3; cursor: not-allowed; transform: none; }
-  .btn-sec { font-family: var(--mono); font-size: 12px; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 7px; padding: 9px 16px; cursor: pointer; transition: border-color .15s, color .15s; }
+
+  .btn-run { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--surface); background: var(--text); border: none; border-radius: 7px; padding: 9px 20px; cursor: pointer; transition: opacity 0.15s, transform 0.1s; letter-spacing: -0.01em; }
+  .btn-run:hover { opacity: 0.82; }
+  .btn-run:active { transform: scale(0.98); }
+  .btn-run:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+  .btn-sec { font-family: var(--mono); font-size: 12px; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 7px; padding: 9px 16px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
   .btn-sec:hover { border-color: var(--border-h); color: var(--text); }
+
   .status { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: auto; display: flex; align-items: center; gap: 7px; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); opacity: .3; flex-shrink: 0; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); opacity: 0.3; flex-shrink: 0; }
   .dot.loading { background: var(--amber); opacity: 1; animation: pulse 1s ease-in-out infinite; }
   .dot.success { background: var(--green); opacity: 1; }
   .dot.error { background: var(--red); opacity: 1; }
-  @keyframes pulse { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
-  .hint { font-family: var(--mono); font-size: 11px; color: var(--muted); opacity: .45; }
+  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  .hint { font-family: var(--mono); font-size: 11px; color: var(--muted); opacity: 0.45; }
+
   footer { border-top: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; }
-  footer span { font-family: var(--mono); font-size: 11px; color: var(--muted); opacity: .5; }
-  .drag-overlay { display: none; position: fixed; inset: 0; background: rgba(250,250,249,.94); z-index: 100; align-items: center; justify-content: center; font-family: var(--mono); font-size: 14px; color: var(--muted); pointer-events: none; border: 2px dashed var(--border-h); }
+  footer span { font-family: var(--mono); font-size: 11px; color: var(--muted); opacity: 0.5; }
+
+  .drag-overlay { display: none; position: fixed; inset: 0; background: rgba(250,250,249,0.94); z-index: 100; align-items: center; justify-content: center; font-family: var(--mono); font-size: 14px; color: var(--muted); pointer-events: none; border: 2px dashed var(--border-h); }
   .drag-overlay.active { display: flex; }
-  @media (max-width: 640px) { .editor-wrap { grid-template-columns: 1fr; } main { padding: 2rem 1rem; } header { padding: 0 1rem; } .hint { display: none; } }
+
+  @media (max-width: 640px) {
+    .editor-wrap { grid-template-columns: 1fr; }
+    main { padding: 2rem 1rem; }
+    header { padding: 0 1rem; }
+    .hint { display: none; }
+  }
 </style>
 </head>
 <body>
-<div class="drag-overlay" id="dragOverlay">drop .lua file to load</div>
+
+<div class="drag-overlay" id="dragOverlay">drop the file to deobf</div>
+
 <header>
   <span class="logo">prometheus<span> / deobf</span></span>
   <span class="badge">i guess vro</span>
 </header>
+
 <main>
   <div>
     <h1>prometheus deobfuscator</h1>
     <p class="sub">paste obfuscated scripts with prometheus</p>
   </div>
+
   <div class="editor-wrap">
     <div class="pane">
       <div class="pane-header">
@@ -80,6 +114,7 @@
       <div class="output-area empty" id="output">output will appear here</div>
     </div>
   </div>
+
   <div class="controls">
     <button class="btn-run" id="runBtn" onclick="run()">run</button>
     <button class="btn-sec" onclick="clearAll()">clear all</button>
@@ -90,10 +125,12 @@
     </div>
   </div>
 </main>
+
 <footer>
   <span>api by 1xayd1</span>
   <span id="charCount">0 chars</span>
 </footer>
+
 <script>
   const INPUT = document.getElementById('input')
   const OUTPUT = document.getElementById('output')
@@ -102,54 +139,99 @@
   const STATUS = document.getElementById('statusText')
   const CHAR_COUNT = document.getElementById('charCount')
 
-  INPUT.addEventListener('input', () => { CHAR_COUNT.textContent = INPUT.value.length.toLocaleString() + ' chars' })
+  INPUT.addEventListener('input', () => {
+    CHAR_COUNT.textContent = `${INPUT.value.length.toLocaleString()} chars`
+  })
 
-  function setStatus(s, t) { DOT.className = 'dot ' + s; STATUS.textContent = t }
+  function setStatus(state, text) { DOT.className = `dot ${state}`; STATUS.textContent = text }
   function clearInput() { INPUT.value = ''; CHAR_COUNT.textContent = '0 chars' }
-  function clearAll() { clearInput(); OUTPUT.textContent = 'output will appear here'; OUTPUT.className = 'output-area empty'; setStatus('', 'ready') }
+  function clearAll() {
+    clearInput()
+    OUTPUT.textContent = 'output will appear here'
+    OUTPUT.className = 'output-area empty'
+    setStatus('', 'ready')
+  }
 
   async function copyOutput() {
     if (OUTPUT.classList.contains('empty') || OUTPUT.classList.contains('error')) return
-    try { await navigator.clipboard.writeText(OUTPUT.textContent); document.getElementById('copyBtn').textContent = 'copied!'; setTimeout(() => document.getElementById('copyBtn').textContent = 'copy', 1500) } catch {}
-  }
-
-  function showError(msg) { OUTPUT.textContent = 'error: ' + msg; OUTPUT.className = 'output-area error'; setStatus('error', 'failed') }
-
-  async function run() {
-    const SRC = INPUT.value.trim()
-    if (!SRC) return
-    RUN_BTN.disabled = true
-    OUTPUT.textContent = ''
-    OUTPUT.className = 'output-area'
-    setStatus('loading', 'deobfuscating...')
-    const START = performance.now()
     try {
-      const RES = await fetch('/deobfuscate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: SRC }) })
-      const DATA = await RES.json()
-      if (DATA.output) {
-        OUTPUT.textContent = DATA.output
-        OUTPUT.className = 'output-area'
-        setStatus('success', 'done in ' + Math.floor(performance.now() - START) + 'ms')
-      } else if (DATA.error === 'not_prometheus') {
-        showError('this script has not been obfuscated with prometheus')
-      } else if (DATA.error === 'max_retries') {
-        showError('maximum retries reached, try again later')
-      } else {
-        showError(DATA.error || 'unknown error')
-      }
-    } catch { showError('something went wrong') }
-    RUN_BTN.disabled = false
+      await navigator.clipboard.writeText(OUTPUT.textContent)
+      const BTN = document.getElementById('copyBtn')
+      BTN.textContent = 'copied!'
+      setTimeout(() => BTN.textContent = 'copy', 1500)
+    } catch {}
   }
 
-  document.addEventListener('dragenter', e => { if (e.dataTransfer?.types.includes('Files')) document.getElementById('dragOverlay').classList.add('active') })
-  document.addEventListener('dragleave', e => { if (!e.relatedTarget) document.getElementById('dragOverlay').classList.remove('active') })
+  function showError(msg) {
+    OUTPUT.textContent = `error: ${msg}`
+    OUTPUT.className = 'output-area error'
+    setStatus('error', 'failed')
+  }
+
+async function run() {
+    const SRC = INPUT.value.trim();
+    if (!SRC) return;
+
+    RUN_BTN.disabled = true;
+    OUTPUT.textContent = '';
+    OUTPUT.className = 'output-area';
+    setStatus('loading', 'deobfuscating...');
+
+    try {
+        const RES = await fetch('https://relua.lua.cz/deobfuscate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filename: '25ms.lua',
+                source: SRC,
+                lua_version: 'Lua51',
+                pretty: true
+            })
+        });
+
+        const DATA = await RES.json();
+
+        if (DATA.output) {
+            OUTPUT.textContent = DATA.output;
+            OUTPUT.className = 'output-area';
+            setStatus('success', 'done');
+        } 
+        else if (DATA.retry_after) {
+            showError('rate limited, try again');
+        } 
+        else {
+            showError('failed to deobfuscate');
+        }
+
+    } catch (e) {
+        showError('network error / blocked api');
+    }
+
+    RUN_BTN.disabled = false;
+}
+
+  document.addEventListener('dragenter', e => {
+    if (e.dataTransfer?.types.includes('Files')) document.getElementById('dragOverlay').classList.add('active')
+  })
+  document.addEventListener('dragleave', e => {
+    if (!e.relatedTarget) document.getElementById('dragOverlay').classList.remove('active')
+  })
   document.addEventListener('dragover', e => e.preventDefault())
   document.addEventListener('drop', e => {
-    e.preventDefault(); document.getElementById('dragOverlay').classList.remove('active')
-    const FILE = e.dataTransfer?.files[0]; if (!FILE) return
-    const R = new FileReader(); R.onload = ev => { INPUT.value = ev.target.result; CHAR_COUNT.textContent = INPUT.value.length.toLocaleString() + ' chars' }; R.readAsText(FILE)
+    e.preventDefault()
+    document.getElementById('dragOverlay').classList.remove('active')
+    const FILE = e.dataTransfer?.files[0]
+    if (!FILE) return
+    const R = new FileReader()
+    R.onload = ev => { INPUT.value = ev.target.result; CHAR_COUNT.textContent = `${INPUT.value.length.toLocaleString()} chars` }
+    R.readAsText(FILE)
   })
-  document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run() } })
+
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run() }
+  })
 </script>
 </body>
 </html>
